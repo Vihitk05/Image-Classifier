@@ -1,11 +1,17 @@
-// api.ts
 import axios from 'axios';
 
-interface ImageClassificationResponse {
+export interface DetectionResult {
+  box: {
+    xmax: number;
+    xmin: number;
+    ymax: number;
+    ymin: number;
+  };
   label: string;
+  score: number;
 }
 
-export const classifyImage = async (image: File): Promise<ImageClassificationResponse> => {
+export const classifyImage = async (image: File): Promise<DetectionResult> => {
   const formData = new FormData();
   formData.append('image', image);
   const response = await axios.post('http://127.0.0.1:5000/api/classify-image', formData, {
@@ -13,5 +19,5 @@ export const classifyImage = async (image: File): Promise<ImageClassificationRes
       'Content-Type': 'multipart/form-data',
     },
   });
-  return response.data;
+  return response.data.data;
 };
