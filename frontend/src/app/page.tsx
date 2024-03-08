@@ -19,6 +19,7 @@ const Home: React.FC = () => {
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
+    setDetectionResults([]);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,9 +42,11 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <h1 className="text-[50px] text-center font-bold">Image Classifier</h1>
+      <h1 className="text-[50px] text-center pb-[2%] text-white font-bold">
+        Image Classifier
+      </h1>
       <form onSubmit={handleSubmit}>
-        <div className="w-[50%] mt-[2%] text-center px-4 rounded-md flex flex-col items-center justify-center cursor-pointer border-4 border-gray-500 border-dashed mx-auto">
+        <div className="w-[50%] text-center px-4 rounded-md flex flex-col items-center justify-center cursor-pointer border-4 border-white border-dashed mx-auto">
           <div className="py-6 relative">
             {selectedImage == null ? (
               <>
@@ -73,7 +76,7 @@ const Home: React.FC = () => {
                   className="w-[300px] mx-auto h-[250px] mb-2"
                 />
                 <button
-                  className="absolute top-3 right-[-10px] font-semibold text-white px-3 py-2 bg-black rounded-full text-md"
+                  className="absolute top-3 right-[-10px] font-semibold text-black px-3 py-2 bg-white rounded-full text-md"
                   onClick={handleRemoveImage}
                 >
                   X
@@ -90,7 +93,7 @@ const Home: React.FC = () => {
               />
               <label
                 htmlFor="uploadFile1"
-                className="block px-6 py-2.5 rounded text-white text-sm tracking-wider font-semibold border-none outline-none bg-black hover:bg-gray-900 cursor-pointer"
+                className="block px-6 py-2.5 rounded text-black text-sm tracking-wider font-bold border-none outline-none bg-white hover:bg-gray-200 cursor-pointer"
               >
                 Browse Images
               </label>
@@ -99,31 +102,47 @@ const Home: React.FC = () => {
               </p>
             </div>
           </div>
-          <hr className="w-full border-black my-2" />
+          <hr className="w-full border-white my-2" />
           {buttonClicked ? (
             <div className="flex justify-center my-5">
-              <Button type="button" disabled>
-                <Bars height={25} width={25} color="#ffffff" />
+              <Button type="button" className="bg-black" disabled>
+                <Bars
+                  height="25"
+                  width="25"
+                  color="#ffffff"
+                  ariaLabel="bars-loading"
+                  wrapperStyle={{ background: "#ffffff" }}
+                  wrapperClass=""
+                  visible={true}
+                />
               </Button>
             </div>
           ) : (
-            <Button type="submit" className="my-5">
+            <Button
+              type="submit"
+              className="my-5 bg-white text-black font-bold hover:bg-gray-200"
+            >
               Generate Tags
             </Button>
           )}
         </div>
       </form>
-      <div className="data w-[50%] mx-auto">
+      <div className="data flex justify-center flex-col">
         {Array.isArray(detectionResults[0]) &&
         detectionResults[0].length > 0 ? (
           <>
             {detectionResults[0].map((result, index) => (
-              <div key={index} className="my-4">
-                <div className="flex flex-row justify-between">
+              <div key={index} className="my-4 mx-[25%]">
+                <div className="flex flex-row justify-between text-white">
                   <p>{String(result.label).toLocaleUpperCase()}</p>
                   <p className="right-0">{result.score * 100}%</p>
                 </div>
-                <Progress value={result.score * 100} />
+                <Progress
+                  id="progress"
+                  className="border-white border-solid"
+                  value={result.score * 100}
+                  color="white"
+                />
               </div>
             ))}
           </>
