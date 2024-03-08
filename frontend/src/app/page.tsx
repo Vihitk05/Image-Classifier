@@ -52,7 +52,7 @@ const Home: React.FC = () => {
               <>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-20 mb-2 fill-gray-600 inline-block"
+                  className="w-20 mb-2 fill-white inline-block"
                   viewBox="0 0 32 32"
                 >
                   <path
@@ -64,7 +64,7 @@ const Home: React.FC = () => {
                     data-original="#000000"
                   />
                 </svg>
-                <h4 className="text-base font-semibold text-gray-600">
+                <h4 className="text-base font-semibold text-white">
                   Choose your Image
                 </h4>
               </>
